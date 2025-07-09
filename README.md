@@ -183,11 +183,11 @@ WHEN NOT MATCHED THEN INSERT ...;
 
 **Customer 360 Data Integration – GCP Bootcamp Project 3**
 Date: July 9, 2025
-
+---
 ** Objective**
 To build a unified Customer 360 view by integrating and transforming raw customer data across online transactions, in-store purchases, loyalty programs, and customer service interactions using GCP tools.
-
-** Project Structure**
+---
+**Project Structure**
  
 Customer360/
 ├── gs://bronze-customer360/        # Raw data
@@ -196,11 +196,14 @@ Customer360/
 │   ├── customer360_silver          # Cleaned tables
 │   └── customer360_gold            # Summary analytics tables
 └── Looker Studio Dashboard         # Visual insights
+
+---
  **Steps Executed**
+ ---
  **Step 1: Upload Raw CSVs**
 All 9 raw datasets were uploaded to:
 gs://bronze-customer360/
-
+---
 **Step 2: Data Cleaning (in Google Colab)**
 Used customer360_cleaning.py
 
@@ -210,7 +213,7 @@ Dropped nulls and duplicates
 
 Saved cleaned CSVs to:
 gs://curated-silver/{TableName}_cleaned/
-
+---
 **Step 3: Load Cleaned Data to BigQuery**
 Created customer360_silver dataset. Loaded each file with:
 
@@ -222,11 +225,11 @@ bq load \
 sakina-gcp:customer360_silver.Customers \
 gs://curated-silver/Customers_cleaned/part-*.csv
 (Similarly repeated for: Products, Stores, LoyaltyAccounts, LoyaltyTransactions, Agents, InStoreTransactions, OnlineTransactions, and CustomerServiceInteractions.)
-
+---
  **Step 4: Create Summary Tables (Gold Layer)**
 Dataset: customer360_gold
 Created these tables:
-
+---
 **1. Average Order Value**
  
 CREATE OR REPLACE TABLE customer360_gold.avg_order_value_summary AS
@@ -238,6 +241,7 @@ SELECT
 FROM customer360_silver.OnlineTransactions
 WHERE TransactionAmount IS NOT NULL
 GROUP BY CustomerID;
+---
 **2. Loyalty Tier Summary**
  
 CREATE OR REPLACE TABLE customer360_gold.loyalty_points_summary AS
@@ -251,6 +255,7 @@ SELECT
     ELSE 'Standard'
   END AS CustomerSegment
 FROM customer360_silver.LoyaltyAccounts;
+---
 **3. InStore vs Online Transactions**
  
 CREATE OR REPLACE TABLE customer360_gold.instore_vs_online_summary AS
@@ -261,6 +266,7 @@ UNION ALL
 SELECT DATE(DateTime), 'Online', COUNT(*)
 FROM customer360_silver.OnlineTransactions
 GROUP BY DATE(DateTime);
+---
 **4. Agent Resolution Summary**
  
 CREATE OR REPLACE TABLE customer360_gold.agent_resolution_summary AS
@@ -271,10 +277,11 @@ SELECT
   ROUND(SAFE_DIVIDE(SUM(CASE WHEN ResolutionStatus = 'Resolved' THEN 1 ELSE 0 END), COUNT(InteractionID)), 2) AS ResolutionRate
 FROM customer360_silver.CustomerServiceInteractions
 GROUP BY AgentID;
+---
 **Step 5: Build Looker Studio Dashboard**
 Connected all 4 gold tables
-
-Created:
+---
+**Created:**
 
  Bar chart: Avg Order Value
 
@@ -283,8 +290,9 @@ Created:
  Line chart: InStore vs Online
 
  Agent Resolution Rate (Bar)
+ ---
 
-**Final Results **
+**Final Results**
 
 Cleaned and loaded 9 datasets into BigQuery
 
@@ -294,7 +302,7 @@ Created Customer 360 dashboard in Looker Studio
 
 Avoided manual uploads with bq automation
 
- 
+---
   
  
  
