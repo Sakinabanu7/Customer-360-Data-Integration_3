@@ -1,0 +1,101 @@
+InteractionID,CustomerID,DateTime,AgentID,IssueType,ResolutionStatus
+70,9,2025-01-05T14:40:00.000Z,27,Technical Issue,Pending
+6,42,2025-02-13T21:05:41.000Z,56,Product Inquiry,Resolved
+82,7,2025-03-14T10:30:53.000Z,28,Other,Pending
+51,31,2025-02-03T11:40:06.000Z,43,Product Inquiry,Resolved
+93,50,2025-03-13T19:14:48.000Z,35,Product Inquiry,Resolved
+10,21,2025-03-15T05:00:10.000Z,78,Product Inquiry,Escalated
+12,85,2025-02-17T10:30:24.000Z,34,Billing,Escalated
+24,14,2025-03-09T11:32:19.000Z,66,Technical Issue,Pending
+89,33,2025-03-04T03:03:57.000Z,43,Billing,Escalated
+32,21,2025-02-12T16:56:32.000Z,86,Complaint,Pending
+99,87,2025-02-08T10:59:29.000Z,57,Product Inquiry,Pending
+80,13,2025-03-05T23:37:20.000Z,90,Other,Escalated
+92,49,2025-03-14T16:51:33.000Z,63,Product Inquiry,Escalated
+1,55,2025-01-20T08:17:26.000Z,33,Technical Issue,Resolved
+23,24,2025-02-07T15:55:36.000Z,21,Other,Escalated
+63,38,2025-01-25T17:04:07.000Z,21,Technical Issue,Resolved
+87,77,2025-02-24T22:20:23.000Z,63,Technical Issue,Escalated
+45,25,2025-02-16T22:22:57.000Z,96,Complaint,Escalated
+54,30,2025-03-02T22:30:41.000Z,81,Complaint,Pending
+26,31,2025-03-15T15:06:09.000Z,58,Product Inquiry,Pending
+68,50,2025-03-05T02:16:18.000Z,57,Technical Issue,Pending
+13,23,2025-02-09T04:38:22.000Z,1,Product Inquiry,Pending
+66,30,2025-01-05T22:24:48.000Z,61,Technical Issue,Pending
+75,55,2025-03-14T14:20:06.000Z,29,Billing,Pending
+96,10,2025-01-19T18:52:40.000Z,74,Product Inquiry,Resolved
+81,90,2025-02-16T03:13:24.000Z,50,Technical Issue,Pending
+84,77,2025-03-15T20:57:54.000Z,79,Complaint,Resolved
+59,37,2025-02-08T22:07:07.000Z,93,Billing,Pending
+60,25,2025-02-26T14:02:13.000Z,47,Billing,Escalated
+67,39,2025-01-13T02:41:23.000Z,2,Other,Escalated
+36,99,2025-01-05T02:13:42.000Z,37,Billing,Pending
+41,55,2025-03-07T12:10:56.000Z,97,Billing,Resolved
+17,71,2025-01-15T03:13:48.000Z,83,Technical Issue,Resolved
+100,46,2025-01-03T03:06:07.000Z,46,Product Inquiry,Escalated
+28,76,2025-03-16T06:30:05.000Z,66,Billing,Escalated
+71,38,2025-01-11T19:27:41.000Z,15,Product Inquiry,Resolved
+64,26,2025-03-04T11:30:49.000Z,99,Technical Issue,Escalated
+25,6,2025-03-14T03:29:07.000Z,73,Technical Issue,Resolved
+22,60,2025-02-19T07:17:58.000Z,45,Other,Escalated
+73,46,2025-01-19T04:54:42.000Z,7,Other,Resolved
+58,15,2025-01-31T09:33:57.000Z,34,Product Inquiry,Escalated
+50,13,2025-01-12T22:39:34.000Z,88,Technical Issue,Resolved
+7,73,2025-03-01T13:19:50.000Z,38,Other,Escalated
+15,7,2025-01-02T03:01:46.000Z,34,Billing,Resolved
+48,74,2025-01-24T10:09:24.000Z,73,Other,Escalated
+3,53,2025-03-16T13:10:05.000Z,96,Complaint,Resolved
+35,73,2025-03-08T05:38:48.000Z,74,Complaint,Escalated
+57,84,2025-03-06T10:51:53.000Z,97,Billing,Pending
+62,26,2025-02-19T22:56:38.000Z,92,Billing,Resolved
+85,18,2025-03-08T10:53:15.000Z,85,Technical Issue,Resolved
+31,16,2025-01-30T16:40:06.000Z,92,Other,Escalated
+86,27,2025-01-25T13:22:25.000Z,72,Other,Pending
+52,31,2025-02-11T07:27:35.000Z,74,Complaint,Escalated
+90,92,2025-01-19T13:54:03.000Z,19,Billing,Pending
+53,42,2025-03-01T11:10:45.000Z,44,Complaint,Resolved
+43,84,2025-02-13T14:59:28.000Z,4,Complaint,Pending
+8,50,2025-01-15T16:44:36.000Z,66,Other,Escalated
+9,63,2025-03-11T10:58:12.000Z,32,Complaint,Pending
+34,17,2025-01-25T01:38:58.000Z,72,Technical Issue,Resolved
+65,99,2025-02-24T04:47:10.000Z,34,Complaint,Pending
+11,69,2025-01-03T21:23:28.000Z,4,Complaint,Escalated
+42,34,2025-01-06T03:57:24.000Z,87,Technical Issue,Resolved
+18,77,2025-01-22T09:39:04.000Z,53,Other,Resolved
+39,79,2025-01-12T14:45:44.000Z,18,Product Inquiry,Escalated
+94,11,2025-01-28T00:10:43.000Z,69,Complaint,Resolved
+76,48,2025-01-22T11:46:16.000Z,21,Product Inquiry,Resolved
+61,64,2025-02-02T19:57:47.000Z,31,Complaint,Pending
+97,17,2025-01-17T11:25:30.000Z,38,Product Inquiry,Escalated
+20,77,2025-01-07T13:51:27.000Z,64,Technical Issue,Resolved
+91,61,2025-01-16T14:09:09.000Z,11,Billing,Resolved
+2,93,2025-01-16T18:52:51.000Z,89,Technical Issue,Escalated
+88,77,2025-03-12T04:14:40.000Z,7,Other,Resolved
+19,79,2025-02-06T17:01:07.000Z,5,Technical Issue,Pending
+47,37,2025-01-19T04:38:02.000Z,29,Complaint,Resolved
+55,55,2025-01-10T15:01:47.000Z,41,Complaint,Pending
+46,69,2025-01-18T15:13:33.000Z,54,Other,Escalated
+30,30,2025-03-09T23:54:02.000Z,10,Product Inquiry,Escalated
+56,95,2025-02-14T10:46:09.000Z,66,Other,Resolved
+77,69,2025-02-23T09:06:09.000Z,32,Technical Issue,Resolved
+27,40,2025-03-05T01:13:35.000Z,9,Other,Escalated
+95,12,2025-02-13T22:43:56.000Z,13,Complaint,Pending
+4,30,2025-02-27T13:45:03.000Z,20,Other,Pending
+37,49,2025-02-06T15:26:41.000Z,18,Other,Escalated
+72,58,2025-01-27T09:55:40.000Z,98,Other,Pending
+74,58,2025-03-10T01:58:34.000Z,37,Product Inquiry,Escalated
+16,44,2025-03-09T16:22:14.000Z,95,Technical Issue,Escalated
+21,64,2025-03-15T13:01:07.000Z,71,Product Inquiry,Resolved
+78,30,2025-03-04T11:00:05.000Z,9,Technical Issue,Resolved
+83,10,2025-03-06T15:32:16.000Z,31,Technical Issue,Pending
+40,27,2025-02-17T02:47:01.000Z,17,Billing,Escalated
+98,100,2025-02-07T14:20:40.000Z,70,Other,Pending
+29,8,2025-02-13T02:48:36.000Z,73,Complaint,Resolved
+49,51,2025-03-16T05:42:26.000Z,35,Product Inquiry,Resolved
+79,94,2025-02-14T21:09:47.000Z,8,Technical Issue,Escalated
+33,8,2025-02-11T04:17:12.000Z,58,Billing,Escalated
+69,52,2025-01-30T23:18:31.000Z,88,Product Inquiry,Escalated
+38,70,2025-01-03T23:07:33.000Z,96,Complaint,Escalated
+44,78,2025-01-10T00:03:03.000Z,78,Product Inquiry,Resolved
+14,24,2025-02-23T02:23:24.000Z,27,Technical Issue,Resolved
+5,49,2025-02-16T07:56:45.000Z,48,Technical Issue,Pending
