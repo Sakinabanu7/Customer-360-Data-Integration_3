@@ -184,7 +184,7 @@ WHEN NOT MATCHED THEN INSERT ...;
 **Customer 360 Data Integration – GCP Bootcamp Project 3**
 Date: July 9, 2025
 ---
-** Objective**
+**Objective**
 To build a unified Customer 360 view by integrating and transforming raw customer data across online transactions, in-store purchases, loyalty programs, and customer service interactions using GCP tools.
 
 ---
@@ -235,7 +235,7 @@ Dataset: customer360_gold
 Created these tables:
 ---
 **1. Average Order Value**
- 
+
 CREATE OR REPLACE TABLE customer360_gold.avg_order_value_summary AS
 SELECT
   CustomerID,
@@ -245,6 +245,7 @@ SELECT
 FROM customer360_silver.OnlineTransactions
 WHERE TransactionAmount IS NOT NULL
 GROUP BY CustomerID;
+
 
 ---
 **2. Loyalty Tier Summary**
@@ -261,6 +262,7 @@ SELECT
   END AS CustomerSegment
 FROM customer360_silver.LoyaltyAccounts;
 
+
 ---
 **3. InStore vs Online Transactions**
  
@@ -268,15 +270,18 @@ CREATE OR REPLACE TABLE customer360_gold.instore_vs_online_summary AS
 SELECT DATE(DateTime) AS TransactionDate, 'InStore' AS TransactionType, COUNT(*) AS TotalTransactions
 FROM customer360_silver.InStoreTransactions
 GROUP BY TransactionDate
+
 UNION ALL
+
 SELECT DATE(DateTime), 'Online', COUNT(*)
 FROM customer360_silver.OnlineTransactions
 GROUP BY DATE(DateTime);
 
+
 ---
 **4. Agent Resolution Summary**
  
-CREATE OR REPLACE TABLE customer360_gold.agent_resolution_summary AS
+ CREATE OR REPLACE TABLE customer360_gold.agent_resolution_summary AS
 SELECT
   AgentID,
   COUNT(InteractionID) AS TotalInteractions,
