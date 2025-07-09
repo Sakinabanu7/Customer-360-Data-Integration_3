@@ -186,6 +186,7 @@ Date: July 9, 2025
 ---
 ** Objective**
 To build a unified Customer 360 view by integrating and transforming raw customer data across online transactions, in-store purchases, loyalty programs, and customer service interactions using GCP tools.
+
 ---
 **Project Structure**
  
@@ -203,6 +204,7 @@ Customer360/
  **Step 1: Upload Raw CSVs**
 All 9 raw datasets were uploaded to:
 gs://bronze-customer360/
+
 ---
 **Step 2: Data Cleaning (in Google Colab)**
 Used customer360_cleaning.py
@@ -213,6 +215,7 @@ Dropped nulls and duplicates
 
 Saved cleaned CSVs to:
 gs://curated-silver/{TableName}_cleaned/
+
 ---
 **Step 3: Load Cleaned Data to BigQuery**
 Created customer360_silver dataset. Loaded each file with:
@@ -225,6 +228,7 @@ bq load \
 sakina-gcp:customer360_silver.Customers \
 gs://curated-silver/Customers_cleaned/part-*.csv
 (Similarly repeated for: Products, Stores, LoyaltyAccounts, LoyaltyTransactions, Agents, InStoreTransactions, OnlineTransactions, and CustomerServiceInteractions.)
+
 ---
  **Step 4: Create Summary Tables (Gold Layer)**
 Dataset: customer360_gold
@@ -241,6 +245,7 @@ SELECT
 FROM customer360_silver.OnlineTransactions
 WHERE TransactionAmount IS NOT NULL
 GROUP BY CustomerID;
+
 ---
 **2. Loyalty Tier Summary**
  
@@ -255,6 +260,7 @@ SELECT
     ELSE 'Standard'
   END AS CustomerSegment
 FROM customer360_silver.LoyaltyAccounts;
+
 ---
 **3. InStore vs Online Transactions**
  
@@ -266,6 +272,7 @@ UNION ALL
 SELECT DATE(DateTime), 'Online', COUNT(*)
 FROM customer360_silver.OnlineTransactions
 GROUP BY DATE(DateTime);
+
 ---
 **4. Agent Resolution Summary**
  
@@ -277,6 +284,7 @@ SELECT
   ROUND(SAFE_DIVIDE(SUM(CASE WHEN ResolutionStatus = 'Resolved' THEN 1 ELSE 0 END), COUNT(InteractionID)), 2) AS ResolutionRate
 FROM customer360_silver.CustomerServiceInteractions
 GROUP BY AgentID;
+
 ---
 **Step 5: Build Looker Studio Dashboard**
 Connected all 4 gold tables
@@ -290,7 +298,8 @@ Connected all 4 gold tables
  Line chart: InStore vs Online
 
  Agent Resolution Rate (Bar)
- ---
+ 
+ --- 
 
 **Final Results**
 
