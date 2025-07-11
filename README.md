@@ -207,7 +207,7 @@ gs://bronze-customer360/
 
 ---
 **Step 2: Data Cleaning (in Google Colab)**
-Used customer360_cleaning.py
+The Cloud Shell Editor was used to submit a PySpark job to Dataproc by running a shell command that created the cluster and submitted the cleaning script customer360_cleaning.py. This script processed the raw datasets stored in the bronze GCS bucket. Each dataset was cleaned by renaming columns, dropping nulls and duplicates, and formatting timestamp fields. The cleaned output was written back to GCS under gs://curated-silver/{TableName}_cleaned/ folders, such as Customers_cleaned, Products_cleaned, and so on.
 
 Applied .strip() and .replace(" ", "_") to column names
 
@@ -236,7 +236,8 @@ Created these tables:
 ---
 **1. Average Order Value**
 
-CREATE OR REPLACE TABLE customer360_gold.avg_order_value_summary AS
+bq query --use_legacy_sql=false
+"CREATE OR REPLACE TABLE customer360_gold.avg_order_value_summary AS
 SELECT
   CustomerID,
   COUNT(TransactionID) AS TotalOrders,
@@ -244,13 +245,14 @@ SELECT
   ROUND(SUM(TransactionAmount)/COUNT(TransactionID), 2) AS AvgOrderValue
 FROM customer360_silver.OnlineTransactions
 WHERE TransactionAmount IS NOT NULL
-GROUP BY CustomerID;
+GROUP BY CustomerID;"
 
 
 ---
 **2. Loyalty Tier Summary**
  
-CREATE OR REPLACE TABLE customer360_gold.loyalty_points_summary AS
+bq query --use_legacy_sql=false 
+"CREATE OR REPLACE TABLE customer360_gold.loyalty_points_summary AS
 SELECT
   CustomerID,
   PointsEarned,
@@ -260,13 +262,14 @@ SELECT
     WHEN PointsEarned >= 2500 THEN 'High-Value Customer'
     ELSE 'Standard'
   END AS CustomerSegment
-FROM customer360_silver.LoyaltyAccounts;
+FROM customer360_silver.LoyaltyAccounts;"
 
 
 ---
 **3. InStore vs Online Transactions**
  
-CREATE OR REPLACE TABLE customer360_gold.instore_vs_online_summary AS
+bq query --use_legacy_sql=false 
+"CREATE OR REPLACE TABLE customer360_gold.instore_vs_online_summary AS
 SELECT DATE(DateTime) AS TransactionDate, 'InStore' AS TransactionType, COUNT(*) AS TotalTransactions
 FROM customer360_silver.InStoreTransactions
 GROUP BY TransactionDate
@@ -275,20 +278,21 @@ UNION ALL
 
 SELECT DATE(DateTime), 'Online', COUNT(*)
 FROM customer360_silver.OnlineTransactions
-GROUP BY DATE(DateTime);
+GROUP BY DATE(DateTime);"
 
 
 ---
 **4. Agent Resolution Summary**
  
- CREATE OR REPLACE TABLE customer360_gold.agent_resolution_summary AS
+ bq query --use_legacy_sql=false 
+ "CREATE OR REPLACE TABLE customer360_gold.agent_resolution_summary AS
 SELECT
   AgentID,
   COUNT(InteractionID) AS TotalInteractions,
   SUM(CASE WHEN ResolutionStatus = 'Resolved' THEN 1 ELSE 0 END) AS ResolvedCount,
   ROUND(SAFE_DIVIDE(SUM(CASE WHEN ResolutionStatus = 'Resolved' THEN 1 ELSE 0 END), COUNT(InteractionID)), 2) AS ResolutionRate
 FROM customer360_silver.CustomerServiceInteractions
-GROUP BY AgentID;
+GROUP BY AgentID;"
 
 ---
 **Step 5: Build Looker Studio Dashboard**
