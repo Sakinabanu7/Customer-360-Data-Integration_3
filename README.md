@@ -406,6 +406,18 @@ submit_cleaning_job >> list_cleaned_files >> load_customers_to_bq >> create_avg_
  Outcome
 This end-to-end DAG allows the full pipeline—from PySpark cleaning, GCS validation, BigQuery loading, to gold table creation—to run seamlessly on schedule or trigger, reducing manual effort and ensuring scalable data operations.
 
+
+
+##  Airflow Operators Used
+
+| Operator                     | Purpose                                                                 |
+|-----------------------------|-------------------------------------------------------------------------|
+| `DataprocSubmitJobOperator` | Submits the PySpark job to Dataproc cluster for data cleaning.          |
+| `GCSListObjectsOperator`    | Lists files in GCS to validate presence of cleaned output.              |
+| `GCSToBigQueryOperator`     | Loads cleaned CSVs from GCS into BigQuery silver-layer tables.          |
+| `BigQueryInsertJobOperator` | Executes SQL queries to generate gold-layer summary tables in BigQuery. |
+| `GCSDeleteObjectsOperator`  | Deletes files from GCS (used for optional cleanup tasks).               |
+
  
 
  
