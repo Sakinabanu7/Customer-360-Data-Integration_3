@@ -321,7 +321,107 @@ Created Customer 360 dashboard in Looker Studio
 Avoided manual uploads with bq automation
 
 ---
-  
+Step 6: Automate the Pipeline Using Cloud Composer (NEW SECTION for README / DOCX)
+markdown
+Copy
+Edit
+### Step 6: Automate the Pipeline Using Cloud Composer
+
+To ensure this pipeline runs on a scheduled or event-driven basis, the full Customer 360 workflow was automated using **Cloud Composer (Airflow)**.
+
+The DAG (`customer360_composer_dag.py`) includes the following tasks:
+
+####  Task 1: Submit PySpark Cleaning Job to Dataproc
+```python
+from airflow.providers.google.cloud.operators.dataproc import DataprocSubmitJobOperator
+
+submit_cleaning_job = DataprocSubmitJobOperator(
+    task_id="submit_cleaning_job",
+    job={
+        "placement": {"cluster_name": "customer360-cluster"},
+        "pyspark_job": {
+            "main_python_file_uri": "gs://scripts-bucket/customer360_cleaning.py"
+        },
+    },
+    region="us-central1",
+    project_id="your-project-id"
+)
+ Task 2: List Cleaned Files in GCS (Optional Validation)
+python
+Copy
+Edit
+from airflow.providers.google.cloud.operators.gcs import GCSListObjectsOperator
+
+list_cleaned_files = GCSListObjectsOperator(
+    task_id="list_cleaned_files",
+    bucket="curated-silver-customer360",
+    prefix="Customers_cleaned/"
+)
+This step validates that the PySpark cleaning job completed successfully and cleaned files were written to the curated-silver GCS bucket.
+
+ Task 3: Load Cleaned Files to BigQuery
+python
+Copy
+Edit
+from airflow.providers.google.cloud.transfers.gcs_to_bigquery import GCSToBigQueryOperator
+
+load_customers_to_bq = GCSToBigQueryOperator(
+    task_id="load_customers_to_bq",
+    bucket="curated-silver-customer360",
+    source_objects=["Customers_cleaned/*.csv"],
+    destination_project_dataset_table="customer360_silver.Customers",
+    skip_leading_rows=1,
+    source_format="CSV",
+    write_disposition="WRITE_TRUNCATE",
+    autodetect=True
+)
+Similar loading tasks are created for the other 8 datasets in the silver layer.
+
+ Task 4: Generate Gold Layer Tables via SQL
+python
+Copy
+Edit
+from airflow.providers.google.cloud.operators.bigquery import BigQueryInsertJobOperator
+
+create_avg_order_summary = BigQueryInsertJobOperator(
+    task_id="create_avg_order_summary",
+    configuration={
+        "query": {
+            "query": """CREATE OR REPLACE TABLE customer360_gold.avg_order_value_summary AS
+                        SELECT
+                          CustomerID,
+                          COUNT(TransactionID) AS TotalOrders,
+                          SUM(TransactionAmount) AS TotalSpent,
+                          ROUND(SUM(TransactionAmount) / COUNT(TransactionID), 2) AS AvgOrderValue
+                        FROM customer360_silver.OnlineTransactions
+                        WHERE TransactionAmount IS NOT NULL
+                        GROUP BY CustomerID;""",
+            "useLegacySql": False
+        }
+    }
+)
+This is repeated for each gold table (loyalty, transaction type, agent resolution).
+
+ Task 5: [Optional] Delete Temporary Files from GCS
+python
+Copy
+Edit
+from airflow.providers.google.cloud.operators.gcs import GCSDeleteObjectsOperator
+
+delete_temp_files = GCSDeleteObjectsOperator(
+    task_id="delete_temp_files",
+    bucket_name="curated-silver-customer360",
+    objects=["Customers_cleaned/sample_file.csv"]
+)
+ DAG Flow Summary
+python
+Copy
+Edit
+submit_cleaning_job >> list_cleaned_files >> load_customers_to_bq >> create_avg_order_summary >> delete_temp_files
+ Outcome
+This end-to-end DAG allows the full pipeline—from PySpark cleaning, GCS validation, BigQuery loading, to gold table creation—to run seamlessly on schedule or trigger, reducing manual effort and ensuring scalable data operations.
+
  
+
  
  
